@@ -48,6 +48,9 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("spikes-wasteland-inside-house",
             new SceneLoader("D01Z03S02_DECO", "MIDDLEGUROUND/AfterPlayer/Spikes/{0}"),
             new SpikeModifier()),
+        new LevelObject("spikes-Mountain",
+            new SceneLoader("D02Z01S05_DECO", "MIDDLEGUROUND/AfterPlayer/Spikes/{0}"),
+            new SpikeModifier()),
         #endregion Spikes
 
         # region Traps
@@ -73,6 +76,17 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("Traps Poison Mist",
             new SceneLoader("D01Z05S08_LOGIC", "TRAPS/PoisonAreaEffect/{0}"),
             new NoModifier("Poison Mist")),
+        new LevelObject("Traps 开关-golden",
+            new SceneLoader("D02Z03S02_LOGIC", "LOGIC/Interactables/{1}/{2}"),
+            new NoModifier("开关-golden")),
+        new LevelObject("Traps OilPot",
+            new SceneLoader("D02Z03S06_LOGIC", "Traps/{0}/{0},{1}"),
+            new NoModifier("Oilpot")),
+        new LevelObject("Traps 滑索电梯",
+            new SceneLoader("D02Z03S06_LOGIC", "LOGIC/{1}/{1}/{0}/{0}"),
+            new NoModifier("Elevator--")),
+        
+        
         #endregion Traps
 
         #region Ladders
@@ -101,9 +115,16 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("ladder-MercyDreams2",
             new SceneLoader("D01Z04S01_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladders/{1}"),
             new LadderModifier(1.6f)),
-        new LevelObject("ladderCistern",
+        new LevelObject("ladder-Cistern",
             new SceneLoader("D01Z05S01_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladders/{2}"),
             new LadderModifier(1.6f)),
+        new LevelObject("ladder-Verdical-Graveryard",
+            new SceneLoader("D02Z02S02_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladders/{0}"),//{1}，{2}，{3}均为梯子。可以考虑合并
+            new LadderModifier(1.6f)),
+        new LevelObject("ladder-Convent",
+            new SceneLoader("D02Z03S02_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladders/{0},{1}"),
+            new LadderModifier(1.6f)),
+
 
 
         
@@ -117,6 +138,11 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("platform-droppable-brotherhood",
             new SceneLoader("D17Z01S04_DECO", "MIDDLEGROUND/AfterPlayer/Floor/brotherhood-spritesheet_41"),
             new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-droppable-Verdical-Graveryard",
+            new SceneLoader("D02Z02S04_LOGIC", "TRAPS/DECO_SNOW_EFFECTS/{2}"),
+            new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
+
+        
         #endregion Droppable Platforms
 
         #region Solid Objects
@@ -241,6 +267,65 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("platform-solid-Jibrael's-Cave",
             new SceneLoader("D01Z06S01_DECO", "MIDDLEGROUND/{0}/{1}/{0}"),
             new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-solid-Mountain1",
+            new SceneLoader("D02Z01S01_DECO", "MIDDLEGROUND/{0}/{1}/{2}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-solid-Mountain1-Wooden1",
+            new SceneLoader("D02Z01S02_DECO", "MIDDLEGROUND/{0}/{2}/{0}"),
+            new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-solid-Mountain1-Wooden1",
+            new SceneLoader("D02Z01S02_DECO", "MIDDLEGROUND/{0}/{2}/{1}"),
+            new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-三结秘舌-横置",
+            new SceneLoader("D02Z01S02_LOGIC", "LOGIC/GEO_RootsBlock/{0}/{0}/{0}/{0}/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-ice-cave",//那个棺材房间
+            new SceneLoader("D02Z01S04_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Mountain-Underground",
+            new SceneLoader("D02Z01S06_DECO", "MIDDLEGROUND/{0}/{1}/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Mountain-Underground2",
+            new SceneLoader("D02Z01S08_DECO", "MIDDLEGROUND/{0}/{1}/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Vertical Graveryard",
+            new SceneLoader("D02Z02S01_DECO", "MIDDLEGROUND/{0}/{2}/{2}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Vertical Graveryard-Wodden",
+            new SceneLoader("D02Z02S03_DECO", "MIDDLEGROUND/{0}/Woodenfloor/{2}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Vertical Graveryard2",
+            new SceneLoader("D02Z02S08_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Vertical Graveryard3",
+            new SceneLoader("D02Z02S10_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Vertical Graveryard-elevator",
+            new SceneLoader("D02Z02S11_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Vertical Graveryard-elevator",
+            new SceneLoader("D02Z02S11_DECO", "MIDDLEGROUND/{0}/Floor/tree-metal-tower-spritesheet7(2)"),
+            new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Vertical Graveryard-elevator",
+            new SceneLoader("D02Z03S01_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Convent",
+            new SceneLoader("D02Z03S02_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Convent-wooden1",
+            new SceneLoader("D02Z03S05_DECO", "MIDDLEGROUND/{0}/Woodenplatforms/{0}"),
+            new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Convent-wooden2",
+            new SceneLoader("D02Z03S05_DECO", "MIDDLEGROUND/{0}/Woodenplatforms/{1}"),
+            new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+
+
+
+
+
+
+    
+
 
 
 
@@ -305,9 +390,31 @@ public class LevelFrameworkExtended : BlasMod
             new NoModifier("Collectible")), 
         #endregion Chest And Collectible
 
+
+
+        #region WallClimber
+        new LevelObject("WallClimber-Mountain1",
+            new SceneLoader("D02Z01S01_LOGIC", "Middleground/AfterPlayer/WallClimber/{0}"),
+            new NoModifier("WallClimber-Mountain1")),
+        new LevelObject("platform-三结秘舌-纵置",
+            new SceneLoader("D02Z01S02_LOGIC", "LOGIC/GEO_RootsBlock(1)/{0}/{0}/{0}/{0}/{0}"),
+            new NoModifier("WallClimber-SanjieMishe")),
+        new LevelObject("WallClimber-Mountain2",
+            new SceneLoader("D02Z01S06_LOGIC", "Middleground/AfterPlayer/WallClimber/{0}"),
+            new NoModifier("WallClimber-Mountain2")),
+        new LevelObject("WallClimber-VerticalGraveryard",
+            new SceneLoader("D02Z02S01_LOGIC", "Middleground/AfterPlayer/WallClimber/{2}"),
+            new NoModifier("WallClimber-Mountain1")),
+    
+        
+
+        #endregion WallClimber
+
         
     ];
 #endregion LevelObject Creators
+
+
 
 
     internal LevelFrameworkExtended() : base(ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.MOD_AUTHOR, ModInfo.MOD_VERSION) { }

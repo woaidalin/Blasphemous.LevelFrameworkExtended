@@ -85,6 +85,7 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("Traps 滑索电梯",
             new SceneLoader("D02Z03S06_LOGIC", "LOGIC/{1}/{1}/{0}/{0}"),
             new NoModifier("Elevator--")),
+
         
         
         #endregion Traps
@@ -124,6 +125,12 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("ladder-Convent",
             new SceneLoader("D02Z03S02_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladders/{0},{1}"),
             new LadderModifier(1.6f)),
+        new LevelObject("ladder-Border",
+            new SceneLoader("D03Z01S01_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladders/{0}"),
+            new LadderModifier(1.6f)),
+        new LevelObject("ladder-Border",
+            new SceneLoader("D03Z01S03_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladders/{0}"),
+            new LadderModifier(1.6f)),
 
 
 
@@ -140,6 +147,9 @@ public class LevelFrameworkExtended : BlasMod
             new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
         new LevelObject("platform-droppable-Verdical-Graveryard",
             new SceneLoader("D02Z02S04_LOGIC", "TRAPS/DECO_SNOW_EFFECTS/{2}"),
+            new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-droppable-Theborder",
+            new SceneLoader("D03Z01S01_LOGIC", "LOGIC/{0}/{3}/GEO_ElusiveBlock_TheBorder (64x32) (3)"),
             new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
 
         
@@ -318,6 +328,26 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("platform-Convent-wooden2",
             new SceneLoader("D02Z03S05_DECO", "MIDDLEGROUND/{0}/Woodenplatforms/{1}"),
             new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-TheBorder",
+            new SceneLoader("D03Z01S01_DECO", "MIDDLEGROUND/{0}/Floor/{1}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-TheBorder2",
+            new SceneLoader("D03Z01S03_DECO", "MIDDLEGROUND/{0}/Floor/{1}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-TheBorder3",
+            new SceneLoader("D03Z01S03_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-TheBorder",
+            new SceneLoader("D03Z01S03_DECO", "MIDDLEGROUND/{0}/Floor/{3}"),
+            new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Moveable in TheBorder",
+            new SceneLoader("D03Z01S03_LOGIC", "LOGIC/{0}/EO_BlockOWD_Moving (128x32) (1)/{3}"),
+            new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+
+
+
+
+
 
 
 
@@ -400,11 +430,17 @@ public class LevelFrameworkExtended : BlasMod
             new SceneLoader("D02Z01S02_LOGIC", "LOGIC/GEO_RootsBlock(1)/{0}/{0}/{0}/{0}/{0}"),
             new NoModifier("WallClimber-SanjieMishe")),
         new LevelObject("WallClimber-Mountain2",
-            new SceneLoader("D02Z01S06_LOGIC", "Middleground/AfterPlayer/WallClimber/{0}"),
+            new SceneLoader("D02Z01S06_DECO", "Middleground/AfterPlayer/WallClimber/{0}"),
             new NoModifier("WallClimber-Mountain2")),
         new LevelObject("WallClimber-VerticalGraveryard",
-            new SceneLoader("D02Z02S01_LOGIC", "Middleground/AfterPlayer/WallClimber/{2}"),
-            new NoModifier("WallClimber-Mountain1")),
+            new SceneLoader("D02Z02S01_DECO", "Middleground/AfterPlayer/WallClimber/{2}"),
+            new NoModifier("WallClimber-Verticalgraveryard")),
+        new LevelObject("WallClimber-Border  ",
+            new SceneLoader("D03Z01S02_DECO", "Middleground/AfterPlayer/WallClimb/{0}"),
+            new NoModifier("WallClimber-Border")),
+        new LevelObject("WallClimber-Border2",
+            new SceneLoader("D03Z01S03_DECO", "Middleground/AfterPlayer/WallClimb/{0}"),
+            new NoModifier("WallClimber-Border2")),
     
         
 

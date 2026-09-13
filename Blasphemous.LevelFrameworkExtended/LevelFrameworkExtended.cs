@@ -51,12 +51,21 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("spikes-Mountain",
             new SceneLoader("D02Z01S05_DECO", "MIDDLEGUROUND/AfterPlayer/Spikes/{0}"),
             new SpikeModifier()),
+        new LevelObject("spikes-jondo",
+            new SceneLoader("D03Z02S03_DECO", "MIDDLEGUROUND/AfterPlayer/Spikes/{0}"),
+            new SpikeModifier()),
+        new LevelObject("spikes-Garden",
+            new SceneLoader("D04Z01S01_DECO", "MIDDLEGUROUND/AfterPlayer/Spikes/{0}"),
+            new SpikeModifier()),
         #endregion Spikes
 
         # region Traps
         // other traps
         new LevelObject("bell-face",
             new SceneLoader("D03Z02S06_LOGIC", "TRAPS/TRAP_SHOCK_ENEMY"),
+            new NoModifier("Face bell")),
+        new LevelObject("bell-face",
+            new SceneLoader("D03Z02S06_LOGIC", "TRAPS/TRAP_SHOCK_CHAIN_REACTION"),
             new NoModifier("Face bell")),
         new LevelObject("Trunk in the Wasteland",
             new SceneLoader("D01Z03S01_LOGIC", "LOGIC/{0}/{0}/{0}"),
@@ -131,6 +140,8 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("ladder-Border",
             new SceneLoader("D03Z01S03_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladders/{0}"),
             new LadderModifier(1.6f)),
+        new LevelObject("ladder-Garden",
+            new SceneLoader("D04Z01S01_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladders/{0}"),//这里给出所有的梯子位置，图源不一致。请合理注册其中需要的
 
 
 
@@ -151,6 +162,16 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("platform-droppable-Theborder",
             new SceneLoader("D03Z01S01_LOGIC", "LOGIC/{0}/{3}/GEO_ElusiveBlock_TheBorder (64x32) (3)"),
             new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-droppable-Theborder2",
+            new SceneLoader("D03Z02S02_LOGIC", "LOGIC/{0}/GEO_BlockOWD_Moving4/{0}"),
+            new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-droppable-Garden",
+            new SceneLoader("D04Z01S01_LOGIC", "LOGIC/{1}/{1}/{0}"),
+            new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-droppable-Garden2",
+            new SceneLoader("D04Z01S01_LOGIC", "TRAPS/{3}/{2}"),//{0}不知道是什么，请查看一下
+            new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
+
 
         
         #endregion Droppable Platforms
@@ -343,6 +364,20 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("platform-Moveable in TheBorder",
             new SceneLoader("D03Z01S03_LOGIC", "LOGIC/{0}/EO_BlockOWD_Moving (128x32) (1)/{3}"),
             new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-不知道是啥玩意",
+            new SceneLoader("D04BZ03_DECO", "MIDDLEGROUND/{0}/Floor/{3}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Garden",
+            new SceneLoader("D04Z01S01_DECO", "MIDDLEGROUND/{0}/Floor/garden-spritesheet_55"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Garden",
+            new SceneLoader("D04Z01S01_DECO", "MIDDLEGROUND/{0}/Floor/garden-spritesheet_13"),
+            new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Garden",
+            new SceneLoader("D04Z01S04_DECO", "MIDDLEGROUND/{0}/Floor/garden-spritesheet_0"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+
+
 
 
 

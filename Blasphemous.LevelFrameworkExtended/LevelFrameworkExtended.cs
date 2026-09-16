@@ -92,8 +92,14 @@ public class LevelFrameworkExtended : BlasMod
             new SceneLoader("D02Z03S06_LOGIC", "Traps/{0}/{0},{1}"),
             new NoModifier("Oilpot")),
         new LevelObject("Traps 滑索电梯",
-            new SceneLoader("D02Z03S06_LOGIC", "LOGIC/{1}/{1}/{0}/{0}"),
+            new SceneLoader("D02Z03S10_LOGIC", "LOGIC/{1}/{1}/{0}/{0}"),
             new NoModifier("Elevator--")),
+        new LevelObject("Traps-香炉",
+            new SceneLoader("D04Z02S01_LOGIC", "Traps/{0}"),
+            new NoModifier("Oilpot")),
+        new LevelObject("Traps-超级无敌巨大香炉",
+            new SceneLoader("D04Z02S16_LOGIC", "Traps/{0}/{0}"),
+            new NoModifier("Oilpot")),
 
         
         
@@ -142,6 +148,7 @@ public class LevelFrameworkExtended : BlasMod
             new LadderModifier(1.6f)),
         new LevelObject("ladder-Garden",
             new SceneLoader("D04Z01S01_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladders/{0}"),//这里给出所有的梯子位置，图源不一致。请合理注册其中需要的
+            new LadderModifier(1.6f)),
 
 
 
@@ -171,6 +178,8 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("platform-droppable-Garden2",
             new SceneLoader("D04Z01S01_LOGIC", "TRAPS/{3}/{2}"),//{0}不知道是什么，请查看一下
             new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
+
+
 
 
         
@@ -376,6 +385,22 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("platform-Garden",
             new SceneLoader("D04Z01S04_DECO", "MIDDLEGROUND/{0}/Floor/garden-spritesheet_0"),
             new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Archcathedral",
+            new SceneLoader("D04Z02S01_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Archcathedral Boss-掘墓大主教",
+            new SceneLoader("D04Z02S22_DECO", "MIDDLEGROUND/{0}/Floor/{1}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-三结",
+            new SceneLoader("D04Z03S01_DECO", "MIDDLEGROUND/{0}/Floor/{0}，{3}"),//合并注册
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-跑酷DLC",
+            new SceneLoader("D04Z04S01_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-跑酷DLC",
+            new SceneLoader("D04Z04S02_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+
 
 
 
@@ -476,6 +501,9 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("WallClimber-Border2",
             new SceneLoader("D03Z01S03_DECO", "Middleground/AfterPlayer/WallClimb/{0}"),
             new NoModifier("WallClimber-Border2")),
+        new LevelObject("WallClimber-Archcathedral",
+            new SceneLoader("D04Z02S06_DECO", "Middleground/AfterPlayer/WallClimb/{0}"),
+            new NoModifier("WallClimber-Archcathedral")),
     
         
 

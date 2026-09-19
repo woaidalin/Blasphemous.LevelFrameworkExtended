@@ -55,7 +55,10 @@ public class LevelFrameworkExtended : BlasMod
             new SceneLoader("D03Z02S03_DECO", "MIDDLEGUROUND/AfterPlayer/Spikes/{0}"),
             new SpikeModifier()),
         new LevelObject("spikes-Garden",
-            new SceneLoader("D04Z01S01_DECO", "MIDDLEGUROUND/AfterPlayer/Spikes/{0}"),
+            new SceneLoader("D04Z01S01_DECO", "MIDDLEGUROUND/AfterPlayer/Gameplay/Spikes/{0}"),
+            new SpikeModifier()),
+        new LevelObject("spikes-Cemetery",
+            new SceneLoader("D05Z02S01_DECO", "MIDDLEGUROUND/AfterPlayer/Gameplay/Spikes/{0}"),
             new SpikeModifier()),
         #endregion Spikes
 
@@ -100,6 +103,19 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("Traps-超级无敌巨大香炉",
             new SceneLoader("D04Z02S16_LOGIC", "Traps/{0}/{0}"),
             new NoModifier("Oilpot")),
+        new LevelObject("Traps-Movable Platform",
+            new SceneLoader("D05Z01S04_LOGIC", "LOGIC/GEO_BlockOWD_Moving (128x32) (1)"),//这个单位很特殊，请自己查看一下
+            new NoModifier("Movable Platform")),
+        new LevelObject("Traps-Ghost",
+            new SceneLoader("D05Z01S04_LOGIC", "TRAPS/GhostTrap"),//{0}：GhostTrapManager，May be useful.
+            new NoModifier("Ghost")),
+        new LevelObject("Traps-book",
+            new SceneLoader("D05Z01S09_DECO", "MIDDLEGROUND/Afterplayer/Props/Riddlebooks"),
+            new NoModifier("book")),
+        new LevelObject("Traps-Guillotine",
+            new SceneLoader("D05Z02S11_LOGIC", "Traps/{0}/{0}"),
+            new NoModifier("book")),
+
 
         
         
@@ -149,6 +165,17 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("ladder-Garden",
             new SceneLoader("D04Z01S01_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladders/{0}"),//这里给出所有的梯子位置，图源不一致。请合理注册其中需要的
             new LadderModifier(1.6f)),
+        new LevelObject("ladder-Library",
+            new SceneLoader("D05Z01S01_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladder/{0}-{5}"),//这里给出所有的梯子位置，图源不一致。请合理注册其中需要的
+            new LadderModifier(1.6f)),
+        new LevelObject("ladder-Library",
+            new SceneLoader("D05Z01S01_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladder/{0}-{5}"),//这里给出所有的梯子位置，图源不一致。请合理注册其中需要的
+            new LadderModifier(1.6f)),
+        new LevelObject("ladder-Cemetery",
+            new SceneLoader("D05Z02S02_DECO", "MIDDLEGROUND/AfterPlayer/Gameplay/Ladders/{0},{1},{2}"),
+            new LadderModifier(1.6f)),
+
+
 
 
 
@@ -400,6 +427,25 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("platform-跑酷DLC",
             new SceneLoader("D04Z04S02_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
             new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Library-wooden1",
+            new SceneLoader("D05Z01S01_DECO", "MIDDLEGROUND/{0}/Floor/{2}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Library-wooden2",
+            new SceneLoader("D05Z01S01_DECO", "MIDDLEGROUND/{0}/Floor/library_spritesheet_34"),
+            new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Library-stone",
+            new SceneLoader("D05Z01S01_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Cemetery",
+            new SceneLoader("D05Z02S01_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Cemetery2",
+            new SceneLoader("D05Z02S02_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+
+
+
+
 
 
 

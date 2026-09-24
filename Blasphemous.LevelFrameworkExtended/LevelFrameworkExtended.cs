@@ -60,6 +60,9 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("spikes-Cemetery",
             new SceneLoader("D05Z02S01_DECO", "MIDDLEGUROUND/AfterPlayer/Gameplay/Spikes/{0}"),
             new SpikeModifier()),
+        new LevelObject("spikes-Tower",
+            new SceneLoader("D06Z01S04_DECO", "MIDDLEGUROUND/AfterPlayer/Gameplay/Spikes/{0}"),
+            new SpikeModifier()),
         #endregion Spikes
 
         # region Traps
@@ -204,6 +207,9 @@ public class LevelFrameworkExtended : BlasMod
             new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
         new LevelObject("platform-droppable-Garden2",
             new SceneLoader("D04Z01S01_LOGIC", "TRAPS/{3}/{2}"),//{0}不知道是什么，请查看一下
+            new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-droppable-Garden",
+            new SceneLoader("D03Z03S05_LOGIC", "LOGIC/{0}/{0}"),
             new ColliderModifer("OneWayDown", new Vector2(2f, 1f), new Vector2(0f, -0.3f))),
 
 
@@ -400,6 +406,12 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("platform-Moveable in TheBorder",
             new SceneLoader("D03Z01S03_LOGIC", "LOGIC/{0}/EO_BlockOWD_Moving (128x32) (1)/{3}"),
             new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-descent",
+            new SceneLoader("D03Z03S01_DECO", "MIDDLEGROUND/{0}/Floor/descent-spritesheet_0"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-descent",
+            new SceneLoader("D03Z03S01_DECO", "MIDDLEGROUND/{0}/Floor/descent-spritesheet_13"),
+            new ColliderModifer("Onewaydown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
         new LevelObject("platform-不知道是啥玩意",
             new SceneLoader("D04BZ03_DECO", "MIDDLEGROUND/{0}/Floor/{3}"),
             new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
@@ -442,6 +454,63 @@ public class LevelFrameworkExtended : BlasMod
         new LevelObject("platform-Cemetery2",
             new SceneLoader("D05Z02S02_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
             new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Rooftop1",
+            new SceneLoader("D06Z01S01_DECO", "MIDDLEGROUND/{0}/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Rooftop-大电梯",
+            new SceneLoader("D06Z01S01_LOGIC", "LOGIC/ACT_BridgeElevator"),//这个文件相当复杂，复杂程度超过了之前所有的合并注册文件，所以只是给出模糊地址，其中文件自行选用
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Rooftop2",
+            new SceneLoader("D06Z01S04_DECO", "MIDDLEGROUND/{0}/Floor/towers-roofs-spritesheet_2 (2)"),
+            new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Rooftop3",
+            new SceneLoader("D06Z01S25_DECO", "MIDDLEGROUND/{0}/Floor/roofts-spritesheet_0"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Rooftop3",
+            new SceneLoader("D06Z01S25_DECO", "MIDDLEGROUND/{0}/Floor/roofts-spritesheet_1"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),//这一条和上一条看起来似乎不像地板，实际上他们应该联合注册
+        new LevelObject("platform-Rooftop3",
+            new SceneLoader("D07Z01S01_DECO", "MIDDLEGROUND/{0}/Floor"),//这里面的所有地板文件有许多艺术元素，但是实际上只有全部注册才能起到原有艺术效果
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Rooftop4-up",
+            new SceneLoader("D07Z01S01_DECO", "MIDDLEGROUND/{0}/Stairs"),//这里面的所有地板文件有许多艺术元素，但是实际上只有全部注册才能起到原有艺术效果
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Ash Mount",
+            new SceneLoader("D07Z03S03_DECO", "MIDDLEGROUND/{0}/Stairs"),//这里面的所有地板文件有许多艺术元素，但是实际上只有全部注册才能起到原有艺术效果
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Ending Boss",
+            new SceneLoader("D07Z01S02_DECO", "MIDDLEGROUND/Afterplayer/Floor/{1}，pontiff-boss-fight-spritesheet_0；MIDDLEGROUND/Beforeplayer/{0}/{0}"),//这里面的所有地板文件有许多艺术元素，但是实际上只有全部注册才能起到原有艺术效果
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-boss-Ending2",
+            new SceneLoader("D07Z01S05_DECO", "Beforeplayer/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-boss-SisterBridge",
+            new SceneLoader("D08Z01S01_DECO", "Middleground/AfterPlayer/BridgeAfter/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-boss-SisterBridge",
+            new SceneLoader("D08Z01S01_DECO", "Middleground/AfterPlayer/Gate/{0}"),//文件里有些不是地板 但是起到了装饰作用 由你来看看怎么注册比较好吧
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Tree1",
+            new SceneLoader("D08Z02S01_DECO", "Middleground/AfterPlayer/Floor/{0}"),
+            new ColliderModifer("OneWayDown", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Tree2",
+            new SceneLoader("D08Z02S01_DECO", "Middleground/AfterPlayer/Floor/tree-metal-tower-spritesheet-remake_3 (3)"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+        new LevelObject("platform-Dawn Room",
+            new SceneLoader("D08Z03S01_DECO", "Middleground/AfterPlayer/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),//这两条能绷住的都是圣人了
+        new LevelObject("platform-Dawn Room",
+            new SceneLoader("D08Z03S01_DECO", "Middleground/AfterPlayer/Floor/{1}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),//这两条能绷住的都是圣人了
+        new LevelObject("platform-Tree2",
+            new SceneLoader("D08Z02S01_DECO", "Middleground/AfterPlayer/Floor/{0}"),
+            new ColliderModifer("Floor", new Vector2(1, 1), new Vector2(0f, -0.3f))),
+
+
+
+    
+
+
 
 
 
@@ -549,6 +618,9 @@ public class LevelFrameworkExtended : BlasMod
             new NoModifier("WallClimber-Border2")),
         new LevelObject("WallClimber-Archcathedral",
             new SceneLoader("D04Z02S06_DECO", "Middleground/AfterPlayer/WallClimb/{0}"),
+            new NoModifier("WallClimber-Archcathedral")),
+        new LevelObject("WallClimber-Archcathedral",
+            new SceneLoader("D08Z03S02_DECO", "Middleground/AfterPlayer/GamePlay/WallClimb/tree-metal-tower-spritesheet-remake_30"),
             new NoModifier("WallClimber-Archcathedral")),
     
         

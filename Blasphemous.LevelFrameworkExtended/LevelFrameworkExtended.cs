@@ -774,11 +774,65 @@ public class LevelFrameworkExtended : BlasMod
             new NoModifier("WallClimber-Prison")),
         new LevelObject("WallClimber-竞技场",
             new SceneLoader("D19Z01S05_DECO", "Middleground/Cell23/AfterPlayer/Wallclimb/{0}"),
-            new NoModifier("WallClimber-Prison")),
+            new NoModifier("WallClimber-竞技场")),
     
         
 
         #endregion WallClimber
+
+        #region Wall
+        new LevelObject("Wall-Church1",
+            new SceneLoader("D01BZ04S01_DECO", "MIDDLEGROUND/{0}/Walls/{0}"),
+            new NoModifier("Wall-Church1")),
+        new LevelObject("Wall-Church2",
+            new SceneLoader("D01BZ04S01_DECO", "MIDDLEGROUND/{0}/Walls/{1}"),
+            new NoModifier("Wall-Church2")),
+        new LevelObject("Wall-Church3",
+            new SceneLoader("D01BZ04S01_DECO", "MIDDLEGROUND/{0}/Walls/{2}"),
+            new NoModifier("Wall-Church3")),
+
+        #endregion Wall
+        #region Props
+        new LevelObject("Props-Church1",
+            new SceneLoader("D01BZ04S01_DECO", "Foreground/{0}/{0}"),
+            new NoModifier("Props-Church1")),
+        new LevelObject("Props-Church2",
+            new SceneLoader("D01BZ04S01_DECO", "MIDDLEGROUND/{0}/Arcs/{0}"),
+            new NoModifier("Props-Church2")),
+        new LevelObject("Props-Church2",
+            new SceneLoader("D01BZ04S01_DECO", "MIDDLEGROUND/{0}/Arcs/chapel-spritesheet_25 (1)"),
+            new NoModifier("Props-Church3")),
+        #endregion Props
+        #region Door
+        new LevelObject("Door-Church",
+            new SceneLoader("D01BZ04S01_DECO", "MIDDLEGROUND/{0}/Arcs/{1}"),//和{2}合并注册
+            new NoModifier("Door-Church")),
+        #endregion Door
+        
+
+
+        #region ArtResource
+        new LevelObject("Background-Store",
+            new SceneLoader("D01BZ02S01_DECO", "MIDDLEGROUND/{0}/{1}/{0}"),
+            new NoModifier("Background-Store")),
+        new LevelObject("Background-石头背景",
+            new SceneLoader("D01BZ02S01_DECO", "MIDDLEGROUND/{0}/{0}/{1}"),//和{2}合并注册
+            new NoModifier("Background-Store")),
+
+        #endregion ArtResource
+
+
+
+        #region NPCs and builds
+        new LevelObject("Shopkeeper",
+            new SceneLoader("D01BZ02S01_DECO", "Logic/Character/NPCs/{0}"),
+            new NoModifier("Shopkeeper")),
+        new LevelObject("捐钱处",
+            new SceneLoader("D01BZ02S01_DECO", "Logic/INTERACTABLES/{0}"),//这里的元素过于复杂，不能有效的注册，请你来注册
+            new NoModifier("Shopkeeper")),
+        #endregion NPCs and builds
+
+        
 
         
     ];

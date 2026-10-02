@@ -102,6 +102,7 @@ public class LevelFrameworkExtended : BlasMod
             new NoModifier("Oilpot")),
         new LevelObject("Traps 滑索电梯",
             new SceneLoader("D09Z01S06_LOGIC", "LOGIC/{1}/{1}/{0}/{0}"),
+            new NoModifier("Elevator--")),
         new LevelObject("Traps 滑索电梯（黑白）",
             new SceneLoader("D02Z03S10_LOGIC", "LOGIC/{2}/{1}/{0}/{0}"),
             new NoModifier("Elevator--")),

@@ -5,6 +5,8 @@ using Blasphemous.ModdingAPI;
 using Framework.Managers;
 using Gameplay.GameControllers.Effects.Entity.BlobShadow;
 using Gameplay.GameControllers.Enemies.Framework.IA;
+using Gameplay.GameControllers.Enemies.MeltedLady;
+using Gameplay.GameControllers.Enemies.MeltedLady.Attack;
 using Gameplay.GameControllers.Enemies.ReekLeader;
 using Gameplay.GameControllers.Enemies.ReekLeader.Attack;
 using Gameplay.GameControllers.Entities;
@@ -91,7 +93,7 @@ internal class MonsterEditorTool : MonoBehaviour
         GUILayout.Label("MONSTER EDITOR", _head);
         GUILayout.Label($"{Current.Id}  {Current.Name}", _text);
 
-        _scroll = GUILayout.BeginScrollView(_scroll, GUILayout.Height(320f));
+        _scroll = GUILayout.BeginScrollView(_scroll, GUILayout.Height(300f));
         for (int i = 0; i < MonsterEditorObjects.Catalog.Length; i++)
         {
             MonsterEntry entry = MonsterEditorObjects.Catalog[i];
@@ -104,10 +106,14 @@ internal class MonsterEditorTool : MonoBehaviour
 
         GUILayout.EndScrollView();
 
-        if (GUILayout.Button("REEK   ReekSpawnPoint   (host: ReekLeader)"))
+        for (int i = 0; i < MonsterEditorObjects.Specials.Length; i++)
         {
-            _selected = -1;
-            FillFromPenitent();
+            MonsterEntry special = MonsterEditorObjects.Specials[i];
+            if (GUILayout.Button($"{special.Id}   {special.Name}"))
+            {
+                _selected = MonsterEditorObjects.Catalog.Length + i;
+                FillFromPenitent();
+            }
         }
 
         GUILayout.BeginHorizontal();
@@ -141,7 +147,7 @@ internal class MonsterEditorTool : MonoBehaviour
         GUILayout.EndHorizontal();
 
         GUILayout.Label(_status, _text);
-        GUILayout.Label("List spawns a monster.  Reek needs EN18 ReekLeader first.", _text);
+        GUILayout.Label("Markers first for Reek and MeltedLady.", _text);
         GUILayout.EndArea();
     }
 
@@ -174,10 +180,12 @@ internal class MonsterEditorTool : MonoBehaviour
         }
     }
 
-    /// <summary>Index -1 is the Reek entry, which the catalogue proper does not contain.</summary>
+    /// <summary>The catalogue comes first; its marker entries follow it.</summary>
     private static MonsterEntry EntryAt(int index)
     {
-        return index < 0 ? MonsterEditorObjects.ReekPoint : MonsterEditorObjects.Catalog[index];
+        return index < MonsterEditorObjects.Catalog.Length
+            ? MonsterEditorObjects.Catalog[index]
+            : MonsterEditorObjects.Specials[index - MonsterEditorObjects.Catalog.Length];
     }
 
     private void Toggle()
@@ -223,6 +231,12 @@ internal class MonsterEditorTool : MonoBehaviour
         if (!float.TryParse(_xText, out x) || !float.TryParse(_yText, out y))
         {
             _status = "bad coordinates";
+            return;
+        }
+
+        if (Current.Kind != MonsterKind.Enemy)
+        {
+            SpawnAt(_selected, x, y);
             return;
         }
 
@@ -319,6 +333,21 @@ internal class MonsterEditorTool : MonoBehaviour
     {
         MonsterEntry entry = EntryAt(index);
 
+        if (entry.Kind != MonsterKind.Enemy)
+        {
+            try
+            {
+                SpawnMarker(entry, x, y);
+            }
+            catch (System.Exception exception)
+            {
+                _status = "error: " + entry.Name;
+                ModLog.Error($"MonsterEditor: marker {entry.Id} failed with {exception.GetType().Name}: {exception.Message}\n{exception.StackTrace}");
+            }
+
+            return;
+        }
+
         GameObject template;
         if (!_templates.TryGetValue(index, out template) || template == null)
         {
@@ -341,12 +370,6 @@ internal class MonsterEditorTool : MonoBehaviour
     {
         EnsureLevelConfig();
 
-        if (entry.Id == MonsterEditorObjects.ReekId)
-        {
-            SpawnReekPoint(template, x, y);
-            return;
-        }
-
         Vector3 target = new Vector3(x, y, 0f);
         GameObject root = Instantiate(template, target, Quaternion.identity);
         root.name = "editor-spawn-" + entry.Id;
@@ -365,6 +388,8 @@ internal class MonsterEditorTool : MonoBehaviour
         {
             child.localPosition = Vector3.zero;
         }
+
+        EnsureMeltedLadyPoints(point.SelectedEnemy, target);
 
         // EntityName must not be empty: CreateEnemy names the clone through it and
         // dereferences its Length, so a null name throws inside the game's own spawner.
@@ -413,25 +438,42 @@ internal class MonsterEditorTool : MonoBehaviour
     }
 
     /// <summary>
-    /// The host route for Reek. A <c>ReekSpawnPoint</c> is a bare marker, and the leader
-    /// collected its markers once in OnStart, so a point placed later has to be pushed into
-    /// the leader's own list. The leader then summons a Reek there on its next cast.
+    /// MeltedLady reads every teleport marker once, in her OnStart, and switches herself off
+    /// when she finds none, which looks exactly like a failed spawn. The marker array has a
+    /// private setter, so a point added afterwards can never reach her: the point has to
+    /// exist before she starts. Place one at her own position so a plain spawn still works.
     /// </summary>
-    private void SpawnReekPoint(GameObject template, float x, float y)
+    private void EnsureMeltedLadyPoints(GameObject prefab, Vector3 target)
     {
-        Vector3 target = new Vector3(x, y, 0f);
-        GameObject marker = Instantiate(template, target, Quaternion.identity);
-        marker.name = "editor-reek-point";
-        marker.SetActive(true);
-        _spawnRoots.Add(marker);
-
-        ReekSpawnPoint point = marker.GetComponent<ReekSpawnPoint>();
-        if (point == null)
+        if (prefab == null || prefab.GetComponentInChildren<MeltedLady>(true) == null)
         {
-            _status = "template is not a ReekSpawnPoint";
             return;
         }
 
+        if (Object.FindObjectsOfType<MeltedLadyTeleportPoint>().Length > 0)
+        {
+            return;
+        }
+
+        CreateMarker<MeltedLadyTeleportPoint>("editor-melted-lady-point", target);
+        ModLog.Info($"MonsterEditor: MeltedLady had no teleport point here, placed one at ({target.x:0.#},{target.y:0.#})");
+    }
+
+    /// <summary>Places a bare marker. These have no scene template, so none is loaded.</summary>
+    private void SpawnMarker(MonsterEntry entry, float x, float y)
+    {
+        Vector3 target = new Vector3(x, y, 0f);
+
+        if (entry.Kind == MonsterKind.MeltedLadyPoint)
+        {
+            CreateMarker<MeltedLadyTeleportPoint>("editor-melted-lady-point", target);
+            _status = $"melted lady point at ({x}, {y})";
+            ModLog.Info($"MonsterEditor: MeltedLadyTeleportPoint at ({x}, {y})");
+            return;
+        }
+
+        GameObject marker = CreateMarker<ReekSpawnPoint>("editor-reek-point", target);
+        ReekSpawnPoint point = marker.GetComponent<ReekSpawnPoint>();
         point.SpawnedEntityId = 0;
 
         ReekLeader leader = Object.FindObjectOfType<ReekLeader>();
@@ -455,6 +497,15 @@ internal class MonsterEditorTool : MonoBehaviour
 
         _status = $"reek point registered ({spawner.ReekSpawnPoints.Count} points on {leader.name})";
         ModLog.Info($"MonsterEditor: ReekSpawnPoint at ({x}, {y}) registered to {leader.name}");
+    }
+
+    private GameObject CreateMarker<T>(string name, Vector3 position) where T : Component
+    {
+        GameObject marker = new GameObject(name);
+        marker.transform.position = position;
+        marker.AddComponent<T>();
+        _spawnRoots.Add(marker);
+        return marker;
     }
 
     /// <summary>
@@ -498,12 +549,12 @@ internal class MonsterEditorTool : MonoBehaviour
             }
         }
 
-        int playerMakerStates = enemy.GetComponentsInChildren<PlayMakerFSM>(true).Length;
+        int stateMachines = enemy.GetComponentsInChildren<PlayMakerFSM>(true).Length;
         Vector3 position = enemy.transform.position;
 
         ModLog.Info(
             $"MonsterEditor: {id} active={enemy.gameObject.activeInHierarchy}"
-            + $" behaviours={behaviours.Length} sleeping={sleeping} pmfsm={playerMakerStates}"
+            + $" behaviours={behaviours.Length} sleeping={sleeping} pmfsm={stateMachines}"
             + $" pos=({position.x:0.#},{position.y:0.#})");
     }
 
@@ -532,6 +583,8 @@ internal class MonsterEditorTool : MonoBehaviour
 
         _reekPoints.Clear();
 
+        // Kill the monsters first: a live MeltedLady keeps a snapshot of the teleport
+        // markers and would throw on her next teleport if they vanished underneath her.
         for (int i = 0; i < _spawnRoots.Count; i++)
         {
             if (_spawnRoots[i] == null)
@@ -544,8 +597,14 @@ internal class MonsterEditorTool : MonoBehaviour
             {
                 Destroy(point.SpawnedEnemy.gameObject);
             }
+        }
 
-            Destroy(_spawnRoots[i]);
+        for (int i = 0; i < _spawnRoots.Count; i++)
+        {
+            if (_spawnRoots[i] != null)
+            {
+                Destroy(_spawnRoots[i]);
+            }
         }
 
         _spawnRoots.Clear();

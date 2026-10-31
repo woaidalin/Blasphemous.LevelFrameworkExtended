@@ -1,5 +1,18 @@
 namespace MonsterEditor.Components;
 
+/// <summary>What a catalogue entry spawns.</summary>
+internal enum MonsterKind
+{
+    /// <summary>An ordinary enemy, cloned from an <c>EnemySpawnPoint</c>.</summary>
+    Enemy,
+
+    /// <summary>A bare <c>ReekSpawnPoint</c> marker, registered with a ReekLeader.</summary>
+    ReekPoint,
+
+    /// <summary>A bare <c>MeltedLadyTeleportPoint</c> marker.</summary>
+    MeltedLadyPoint,
+}
+
 /// <summary>
 /// One editable monster: its catalogue id, display name, and the spawn-point template it
 /// is cloned from.
@@ -7,12 +20,18 @@ namespace MonsterEditor.Components;
 internal sealed class MonsterEntry
 {
     internal MonsterEntry(string id, string name, string scene, string path, float lift)
+        : this(id, name, scene, path, lift, MonsterKind.Enemy)
+    {
+    }
+
+    internal MonsterEntry(string id, string name, string scene, string path, float lift, MonsterKind kind)
     {
         Id = id;
         Name = name;
         Scene = scene;
         Path = path;
         Lift = lift;
+        Kind = kind;
     }
 
     /// <summary>Gets the catalogue id, for example <c>EN04</c>.</summary>
@@ -29,4 +48,7 @@ internal sealed class MonsterEntry
 
     /// <summary>Gets the vertical offset so ground monsters start above the floor.</summary>
     internal float Lift { get; }
+
+    /// <summary>Gets what this entry spawns.</summary>
+    internal MonsterKind Kind { get; }
 }

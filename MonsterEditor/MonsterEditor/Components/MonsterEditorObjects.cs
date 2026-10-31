@@ -13,16 +13,27 @@ internal static class MonsterEditorObjects
     /// <summary>Prefix shared by every registered object type.</summary>
     internal const string IdPrefix = "monster-";
 
-    /// <summary>Catalogue id of the host-route entry that places a ReekSpawnPoint.</summary>
-    internal const string ReekId = "REEK";
-
     /// <summary>
     /// Reek cannot be placed directly: it has no <c>EnemySpawnPoint</c> of its own, and a
-    /// <c>ReekSpawnPoint</c> is just an empty marker. The editor therefore places the marker
-    /// and registers it with a ReekLeader, which does the summoning.
+    /// <c>ReekSpawnPoint</c> is just an empty marker. The editor places the marker and
+    /// registers it with a ReekLeader, which does the summoning.
     /// </summary>
     internal static readonly MonsterEntry ReekPoint =
-        new MonsterEntry(ReekId, "ReekSpawnPoint (host: ReekLeader)", "D01Z05S02_LOGIC", "CHARACTERS/ENEMIES/ReekSpawnPoint", 0f);
+        new MonsterEntry("REEK", "ReekSpawnPoint (host: ReekLeader)", string.Empty, string.Empty, 0f, MonsterKind.ReekPoint);
+
+    /// <summary>
+    /// MeltedLady refuses to live without at least one teleport marker and deactivates
+    /// herself otherwise, so the editor can place markers for her.
+    /// </summary>
+    internal static readonly MonsterEntry MeltedLadyPoint =
+        new MonsterEntry("MELTED", "MeltedLadyTeleportPoint", string.Empty, string.Empty, 0f, MonsterKind.MeltedLadyPoint);
+
+    /// <summary>Entries that spawn a bare marker instead of a cloned enemy.</summary>
+    internal static readonly MonsterEntry[] Specials =
+    {
+        ReekPoint,
+        MeltedLadyPoint,
+    };
 
     /// <summary>
     /// The 51 normal enemies with a reusable <c>EnemySpawnPoint</c>. The three that need a

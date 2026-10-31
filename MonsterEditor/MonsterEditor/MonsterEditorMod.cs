@@ -6,8 +6,7 @@ using UnityEngine;
 namespace MonsterEditor;
 
 /// <summary>
-/// Registers the monster catalogue as level objects and starts the in-game editor
-/// once, so the same build supports both level edits and live spawning.
+/// Registers the monster catalogue as level objects and starts the in-game editor.
 /// </summary>
 public class MonsterEditorMod : BlasMod
 {
@@ -41,6 +40,12 @@ public class MonsterEditorMod : BlasMod
         GameObject tool = new GameObject("MonsterEditorTool");
         Object.DontDestroyOnLoad(tool);
         tool.AddComponent<MonsterEditorTool>();
-        ModLog.Info("Monster editor tool created");
+        ModLog.Info("MonsterEditor: tool created");
+    }
+
+    /// <inheritdoc/>
+    protected override void OnLevelUnloaded(string oldLevel, string newLevel)
+    {
+        MonsterEditorTool.InvalidateLevelConfig();
     }
 }

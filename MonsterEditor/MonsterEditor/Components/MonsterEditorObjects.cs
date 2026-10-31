@@ -1,68 +1,12 @@
 using System.Collections.Generic;
-using Blasphemous.Framework.Levels;
 using Blasphemous.Framework.Levels.Loaders;
-using Blasphemous.Framework.Levels.Modifiers;
-using Blasphemous.ModdingAPI;
-using Tools.Level.Layout;
-using UnityEngine;
 
 namespace MonsterEditor.Components;
 
 /// <summary>
-/// One registerable level object, mirroring the framework's own bookkeeping so this
-/// mod can expose its catalogue both to level edits and to the in-game editor.
-/// </summary>
-internal sealed class LevelObjectEntry
-{
-    internal LevelObjectEntry(string id, ILoader loader, IModifier modifier)
-    {
-        Id = id;
-        Loader = loader;
-        Modifier = modifier;
-    }
-
-    internal string Id { get; }
-
-    internal ILoader Loader { get; }
-
-    internal IModifier Modifier { get; }
-
-    internal void Register(ModServiceProvider provider)
-    {
-        provider.RegisterObjectCreator(Id, new ObjectCreator(Loader, Modifier));
-    }
-}
-
-/// <summary>One editable monster: display name, spawn-point template and lift.</summary>
-internal sealed class MonsterEntry
-{
-    internal MonsterEntry(string id, string name, string scene, string path, float lift)
-    {
-        Id = id;
-        Name = name;
-        Scene = scene;
-        Path = path;
-        Lift = lift;
-    }
-
-    internal string Id { get; }
-
-    internal string Name { get; }
-
-    /// <summary>Source logic scene that holds a ready-made spawn point.</summary>
-    internal string Scene { get; }
-
-    /// <summary>Hierarchy path of that spawn point inside the scene.</summary>
-    internal string Path { get; }
-
-    /// <summary>Vertical offset so ground monsters start above the floor, not inside it.</summary>
-    internal float Lift { get; }
-}
-
-/// <summary>
-/// Every monster that has a reusable spawn point, as level objects. Each entry can be
-/// placed through a level edit (<c>monster-en04</c> and so on); the in-game editor reuses
-/// the same catalogue and clones a template on demand.
+/// The monster catalogue. Every entry can be placed through a level edit
+/// (<c>monster-en04</c> and so on); the in-game editor reuses the same catalogue and
+/// clones a template on demand.
 /// </summary>
 internal static class MonsterEditorObjects
 {
@@ -81,8 +25,8 @@ internal static class MonsterEditorObjects
         new MonsterEntry(ReekId, "ReekSpawnPoint (host: ReekLeader)", "D01Z05S02_LOGIC", "CHARACTERS/ENEMIES/ReekSpawnPoint", 0f);
 
     /// <summary>
-    /// The 51 normal enemies with a reusable <c>EnemySpawnPoint</c>. The three that need
-    /// a summoner host (Reek, ChasingHead, ExplodingHead) and WaxCrawler are not listed.
+    /// The 51 normal enemies with a reusable <c>EnemySpawnPoint</c>. The three that need a
+    /// summoner host are handled elsewhere, and WaxCrawler has no template at all.
     /// </summary>
     internal static readonly MonsterEntry[] Catalog =
     {
@@ -149,45 +93,6 @@ internal static class MonsterEditorObjects
                 IdPrefix + entry.Id.ToLowerInvariant(),
                 new SceneLoader(entry.Scene, entry.Path),
                 new MonsterPlacementModifier());
-        }
-    }
-}
-
-/// <summary>
-/// Turns a cloned spawn point into an ordinary "spawn on load" point, so a level edit
-/// can also use the catalogue without the in-game editor.
-/// </summary>
-internal class MonsterPlacementModifier : IModifier
-{
-    public void Apply(GameObject obj, ObjectData data)
-    {
-        obj.name = string.IsNullOrEmpty(data.id) ? "MonsterSpawn" : data.id;
-
-        EnemySpawnPoint point = obj.GetComponent<EnemySpawnPoint>();
-        if (point == null)
-        {
-            obj.SetActive(false);
-            return;
-        }
-
-        point.SpawnEnabledEnemy = true;
-        point.SpawnOnArena = false;
-        point.EnableBehaviourOnLoad = true;
-        point.EnablePersistence = false;
-        point.EnemySpawnDisabled = false;
-
-        Transform spawnPoint = obj.transform.Find("Spawn Point");
-        if (spawnPoint != null)
-        {
-            spawnPoint.localPosition = Vector3.zero;
-        }
-
-        SpriteRenderer[] renderers = obj.GetComponentInChildren<SpriteRenderer>(true) != null
-            ? obj.GetComponentsInChildren<SpriteRenderer>(true)
-            : new SpriteRenderer[0];
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            renderers[i].enabled = false;
         }
     }
 }

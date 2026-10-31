@@ -7,19 +7,10 @@ namespace MonsterEditor;
 [BepInDependency("Blasphemous.Framework.Levels", "0.2.0")]
 internal class Main : BaseUnityPlugin
 {
-    /// <summary>Gets the plugin instance, used to host coroutines.</summary>
-    public static Main Instance { get; private set; }
-
-    /// <summary>Gets the mod instance.</summary>
-    public static MonsterEditorMod Mod { get; private set; }
-
-    private void Awake()
-    {
-        Instance = this;
-    }
+    public static MonsterEditorMod MonsterEditorMod { get; private set; }
 
     private void Start()
     {
-        Mod = new MonsterEditorMod();
+        MonsterEditorMod = new MonsterEditorMod();
     }
 }

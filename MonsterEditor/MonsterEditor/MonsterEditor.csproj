@@ -10,8 +10,8 @@
     <Product>Monster Editor</Product>
     <Authors>NewbieElton</Authors>
     <Company>NewbieElton</Company>
-    <Description>In-game monster editor: spawns a small catalog of enemies on demand with hotkeys.</Description>
-    <Version>0.1.0</Version>
+    <Description>In-game monster editor: spawns any normal enemy on demand, with a host route for Reek.</Description>
+    <Version>0.2.0</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>

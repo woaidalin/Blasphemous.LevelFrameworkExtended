@@ -30,6 +30,9 @@ internal class MonsterEditorTool : MonoBehaviour
     /// <summary>The real level's initializer, captured on every level load.</summary>
     private static LevelInitializer _levelConfig;
 
+    /// <summary>False while a level is loading; spawning is refused until it flips back.</summary>
+    private static bool _levelReady;
+
     private readonly Dictionary<int, GameObject> _templates = new Dictionary<int, GameObject>();
 
     private readonly List<GameObject> _spawnRoots = new List<GameObject>();
@@ -161,6 +164,12 @@ internal class MonsterEditorTool : MonoBehaviour
         }
     }
 
+    /// <summary>Opens or closes the door while a level transition is in progress.</summary>
+    internal static void SetLevelReady(bool ready)
+    {
+        _levelReady = ready;
+    }
+
     /// <summary>Drops the captured initializer, which dies with the level that owned it.</summary>
     internal static void InvalidateLevelConfig()
     {
@@ -221,6 +230,12 @@ internal class MonsterEditorTool : MonoBehaviour
 
     private void RequestSpawn()
     {
+        if (!_levelReady)
+        {
+            _status = "level is still loading - try again";
+            return;
+        }
+
         if (_busy)
         {
             return;
@@ -271,6 +286,12 @@ internal class MonsterEditorTool : MonoBehaviour
     /// </summary>
     private IEnumerator BuildTemplate(int index)
     {
+        if (!_levelReady)
+        {
+            _status = "level is still loading - template not built";
+            yield break;
+        }
+
         _busy = true;
         MonsterEntry entry = EntryAt(index);
         _status = "building template: " + entry.Name;
@@ -309,6 +330,11 @@ internal class MonsterEditorTool : MonoBehaviour
                 ModLog.Warn($"MonsterEditor: template {entry.Id} carries no enemy prefab");
             }
 
+            if (loadedHere)
+            {
+                PauseForeignScene(scene, source);
+            }
+
             GameObject template = Instantiate(source);
             template.name = "template-" + entry.Id;
             template.SetActive(false);
@@ -326,6 +352,24 @@ internal class MonsterEditorTool : MonoBehaviour
             }
 
             Core.Logic.SetCurrentLevelConfig(savedConfig);
+        }
+    }
+
+    /// <summary>
+    /// Stops the loaded room from doing anything on its own. Only the root that holds the
+    /// spawn point stays active, so the room's camera pan, level initializer and enemies are
+    /// frozen and cannot reach into the level that is actually running.
+    /// </summary>
+    private static void PauseForeignScene(Scene scene, GameObject keep)
+    {
+        Transform keepRoot = keep.transform.root;
+        GameObject[] roots = scene.GetRootGameObjects();
+        for (int i = 0; i < roots.Length; i++)
+        {
+            if (roots[i].transform != keepRoot)
+            {
+                roots[i].SetActive(false);
+            }
         }
     }
 

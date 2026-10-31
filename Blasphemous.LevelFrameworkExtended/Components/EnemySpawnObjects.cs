@@ -3,6 +3,9 @@ using Blasphemous.Framework.Levels.Loaders;
 using Blasphemous.Framework.Levels.Modifiers;
 using System.Collections;
 using System.Collections.Generic;
+using Framework.Managers;
+using Gameplay.GameControllers.Enemies.Framework.IA;
+using Gameplay.GameControllers.Entities;
 using Tools.Level.Layout;
 using UnityEngine;
 
@@ -158,8 +161,31 @@ internal sealed class EnemySpawnActivator : MonoBehaviour
             float lift = markers[i].Lift > 0f ? markers[i].Lift : 0.1f;
             point.SpawnedEnemy.transform.position = point.transform.position + new Vector3(0f, lift, 0f);
             point.SpawnedEnemy.gameObject.SetActive(true);
+            WakeLateSpawn(point.SpawnedEnemy);
         }
 
         Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Many enemies disable their behaviour in OnAwake and only re-enable it from
+    /// <c>SpawnManager.OnPlayerSpawn</c>, which has already fired by the time a level edit
+    /// spawns anything. ChainedAngel, BellGhost, LanceAngel, Legionary, WalkingTomb,
+    /// JarThrower, CowardTrapper, Roller, Runner, ShieldMaiden, FloatingLady,
+    /// ShooterProcessioner, RangedBoomerang, BellCarrier, PietyMonster and
+    /// BejeweledSaintHead all follow that pattern and would otherwise stand still.
+    /// Replay the two steps those handlers perform, on this enemy only.
+    /// </summary>
+    private static void WakeLateSpawn(Enemy enemy)
+    {
+        if (enemy.Target == null && Core.Logic.Penitent != null)
+            enemy.Target = Core.Logic.Penitent.gameObject;
+
+        EnemyBehaviour[] behaviours = enemy.GetComponentsInChildren<EnemyBehaviour>(true);
+        for (int i = 0; i < behaviours.Length; i++)
+        {
+            if (!behaviours[i].enabled)
+                behaviours[i].enabled = true;
+        }
     }
 }
